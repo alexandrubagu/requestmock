@@ -1,5 +1,5 @@
-defmodule RequestMockWeb.PageControllerTest do
-  use RequestMockWeb.ConnCase
+defmodule RequestMock.Web.PageControllerTest do
+  use RequestMock.Web.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")

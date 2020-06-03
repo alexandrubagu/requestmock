@@ -7,15 +7,15 @@
 # General application configuration
 use Mix.Config
 
-config :requestmock,
+config :request_mock,
   namespace: RequestMock,
   ecto_repos: [RequestMock.Repo]
 
 # Configures the endpoint
-config :requestmock, RequestMockWeb.Endpoint,
+config :request_mock, RequestMock.Web.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "VbR39/X9I7jCbdPD788hjbdGhlCVNZos1eyAaVOtRMp5cPrgB+QkdvZ8EqBVwMel",
-  render_errors: [view: RequestMockWeb.ErrorView, accepts: ~w(html json), layout: false],
+  render_errors: [view: RequestMock.Web.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: RequestMock.PubSub,
   live_view: [signing_salt: "v0bScE2Q"]
 

@@ -10,11 +10,11 @@ defmodule RequestMock.Application do
       # Start the Ecto repository
       RequestMock.Repo,
       # Start the Telemetry supervisor
-      RequestMockWeb.Telemetry,
+      RequestMock.Web.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: RequestMock.PubSub},
       # Start the Endpoint (http/https)
-      RequestMockWeb.Endpoint
+      RequestMock.Web.Endpoint
       # Start a worker by calling: RequestMock.Worker.start_link(arg)
       # {RequestMock.Worker, arg}
     ]
@@ -28,7 +28,7 @@ defmodule RequestMock.Application do
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    RequestMockWeb.Endpoint.config_change(changed, removed)
+    RequestMock.Web.Endpoint.config_change(changed, removed)
     :ok
   end
 end

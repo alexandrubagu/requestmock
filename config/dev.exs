@@ -1,10 +1,10 @@
 use Mix.Config
 
 # Configure your database
-config :requestmock, RequestMock.Repo,
+config :request_mock, RequestMock.Repo,
   username: "postgres",
   password: "postgres",
-  database: "requestmock_dev",
+  database: "request_mock_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -15,7 +15,7 @@ config :requestmock, RequestMock.Repo,
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
-config :requestmock, RequestMockWeb.Endpoint,
+config :request_mock, RequestMock.Web.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
@@ -55,13 +55,13 @@ config :requestmock, RequestMockWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :requestmock, RequestMockWeb.Endpoint,
+config :request_mock, RequestMock.Web.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/requestmock_web/(live|views)/.*(ex)$",
-      ~r"lib/requestmock_web/templates/.*(eex)$"
+      ~r"lib/web/(live|views)/.*(ex)$",
+      ~r"lib/web/templates/.*(eex)$"
     ]
   ]
 

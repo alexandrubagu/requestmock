@@ -1,16 +1,16 @@
-defmodule RequestMockWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :requestmock
+defmodule RequestMock.Web.Endpoint do
+  use Phoenix.Endpoint, otp_app: :request_mock
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_requestmock_key",
+    key: "_request_mock_key",
     signing_salt: "JAX7p0Pn"
   ]
 
-  socket "/socket", RequestMockWeb.UserSocket,
+  socket "/socket", RequestMock.Web.UserSocket,
     websocket: true,
     longpoll: false
 
@@ -20,7 +20,7 @@ defmodule RequestMockWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :requestmock,
+    from: :request_mock,
     gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
@@ -30,7 +30,7 @@ defmodule RequestMockWeb.Endpoint do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
-    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :requestmock
+    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :request_mock
   end
 
   plug Plug.RequestId
@@ -44,5 +44,5 @@ defmodule RequestMockWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug RequestMockWeb.Router
+  plug RequestMock.Web.Router
 end

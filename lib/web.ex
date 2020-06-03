@@ -1,12 +1,12 @@
-defmodule RequestMockWeb do
+defmodule RequestMock.Web do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
 
   This can be used in your application as:
 
-      use RequestMockWeb, :controller
-      use RequestMockWeb, :view
+      use RequestMock.Web, :controller
+      use RequestMock.Web, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -19,19 +19,19 @@ defmodule RequestMockWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: RequestMockWeb
+      use Phoenix.Controller, namespace: RequestMock.Web
 
       import Plug.Conn
-      import RequestMockWeb.Gettext
-      alias RequestMockWeb.Router.Helpers, as: Routes
+      import RequestMock.Web.Gettext
+      alias RequestMock.Web.Router.Helpers, as: Routes
     end
   end
 
   def view do
     quote do
       use Phoenix.View,
-        root: "lib/requestmock_web/templates",
-        namespace: RequestMockWeb
+        root: "lib/web/templates",
+        namespace: RequestMock.Web
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
@@ -54,7 +54,7 @@ defmodule RequestMockWeb do
   def channel do
     quote do
       use Phoenix.Channel
-      import RequestMockWeb.Gettext
+      import RequestMock.Web.Gettext
     end
   end
 
@@ -66,9 +66,9 @@ defmodule RequestMockWeb do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
-      import RequestMockWeb.ErrorHelpers
-      import RequestMockWeb.Gettext
-      alias RequestMockWeb.Router.Helpers, as: Routes
+      import RequestMock.Web.ErrorHelpers
+      import RequestMock.Web.Gettext
+      alias RequestMock.Web.Router.Helpers, as: Routes
     end
   end
 

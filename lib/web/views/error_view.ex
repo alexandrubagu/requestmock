@@ -1,5 +1,5 @@
-defmodule RequestMockWeb.ErrorView do
-  use RequestMockWeb, :view
+defmodule RequestMock.Web.ErrorView do
+  use RequestMock.Web, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

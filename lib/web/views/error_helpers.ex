@@ -1,4 +1,4 @@
-defmodule RequestMockWeb.ErrorHelpers do
+defmodule RequestMock.Web.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -39,9 +39,9 @@ defmodule RequestMockWeb.ErrorHelpers do
     # should be written to the errors.po file. The :count option is
     # set by Ecto and indicates we should also apply plural rules.
     if count = opts[:count] do
-      Gettext.dngettext(RequestMockWeb.Gettext, "errors", msg, msg, count, opts)
+      Gettext.dngettext(RequestMock.Web.Gettext, "errors", msg, msg, count, opts)
     else
-      Gettext.dgettext(RequestMockWeb.Gettext, "errors", msg, opts)
+      Gettext.dgettext(RequestMock.Web.Gettext, "errors", msg, opts)
     end
   end
 end

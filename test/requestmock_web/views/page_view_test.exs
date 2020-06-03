@@ -1,3 +1,3 @@
-defmodule RequestMockWeb.PageViewTest do
-  use RequestMockWeb.ConnCase, async: true
+defmodule RequestMock.Web.PageViewTest do
+  use RequestMock.Web.ConnCase, async: true
 end

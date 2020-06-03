@@ -1,5 +1,5 @@
-defmodule RequestMockWeb.Router do
-  use RequestMockWeb, :router
+defmodule RequestMock.Web.Router do
+  use RequestMock.Web, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,14 +13,14 @@ defmodule RequestMockWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", RequestMockWeb do
+  scope "/", RequestMock.Web do
     pipe_through :browser
 
     get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", RequestMockWeb do
+  # scope "/api", RequestMock.Web do
   #   pipe_through :api
   # end
 end
