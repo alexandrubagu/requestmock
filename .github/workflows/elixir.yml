@@ -8,7 +8,14 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ${{ matrix.os }}
+    name: OTP ${{ matrix.otp }} | Elixir ${{ matrix.elixir }} | Node ${{ matrix.node }} | OS ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04]
+        otp: [22.x]
+        elixir: [1.9.x]
+        node: [12.x]
 
     services:
       postgres:
@@ -48,4 +55,32 @@ jobs:
         mix test
       env:
         MIX_ENV: test
+    - name: Prepare release
+      run: |
+        mix deps.get --only prod
+        mix compile
+        npm install --prefix ./assets
+        npm run deploy --prefix ./assets
+        mix phx.digest
+        mix release
+      env:
+        MIX_ENV: prod
+        SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        PORT: ${{ secrets.PORT }}
+    - name: Deploy release
+      run: |
+        echo "$SSH_PRIVATE_KEY" > ssh_private_key ; chmod 400 ssh_private_key
+        scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ssh_private_key /home/runner/work/requestmock/requestmock/_build/prod/app-0.1.0.tar.gz devel@$DEPLOY_HOST:/home/devel/apps/requestmock
+        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ssh_private_key devel@$DEPLOY_HOST << EOF
+          cd /home/devel/apps/requestmock/
+          tar -xf app-0.1.0.tar.gz
+          sudo systemctl status requestmock.service
+        EOF
+      env:
+        DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
+    
+
+        
