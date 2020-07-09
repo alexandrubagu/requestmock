@@ -1,11 +1,22 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     RequestMock.Repo.insert!(%RequestMock.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+defmodule Seeds do
+  use GenServer
+
+  @opts [
+    max_concurrency: System.schedulers_online() * 2 + 2
+  ]
+
+  def run do
+    pid = Process.whereis(Database.Response.Manager)
+
+    1..3_000_000
+    |> Task.async_stream(
+      fn _ ->
+        GenServer.call(pid, {:persist, Ecto.UUID.generate()})
+      end,
+      @opts
+    )
+    |> Stream.run()
+  end
+end
+
+Seeds.run()
