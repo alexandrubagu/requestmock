@@ -1,0 +1,70 @@
+<div class="col-md-12">
+  <div class="row bg-title">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="<%= Routes.app_path(@conn, :index) %>">Homepage</a></li>
+        <li class="active">Mock list</li>
+      </ol>
+    </div>
+  </div>
+  <div class="white-box">
+    <%= if Enum.count(@mocks) > 0 do %>
+    <h2 class="box-title">Mock List</h2>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Mock</th>
+                <th>Status</th>
+                <th>Tags</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= for {mock_tuple, index} <- Enum.with_index(@mocks) do %>
+              <% {uuid, mock} = mock_tuple %>
+              <tr>
+                <td><%= index + 1 %></td>
+                <td class="text-nowrap"><a data-toggle="tooltip" title="Go to mock url" class="text-info"
+                    href="<%= Routes.app_path(@conn, :view, uuid) %>"><%= uuid %></a></td>
+                <td class="text-nowrap">
+                  <input type="checkbox" class="js-switch" data-color="#13dafe" data-mock="<%= uuid %>"
+                    <%= if mock.status == 1 do %> checked="checked" <% end %> />
+                </td>
+                <td class="text-nowrap">
+                  <%= for tag <- mock.tags do %>
+                  <span class="label label-info"><%= tag %></span>
+                  <% end %>
+                </td>
+                <td class="text-nowrap">
+                  <a href="<%= Routes.app_path(@conn, :howto, uuid) %>" class="btn btn-xs btn-outline btn-info"
+                    data-toggle="tooltip" title="Help">How To</a>
+                  <a href="<%= Routes.app_path(@conn, :view, uuid) %>" class="btn btn-xs btn-outline btn-info"
+                    data-toggle="tooltip" title="View stats">Statistics</a>
+                  <a target="_blank" href="/request/<%= uuid %>" class="btn btn-xs btn-outline btn-info"
+                    data-toggle="tooltip" title="Mock URL">Get URL</a>
+                  <a href="#delete" class="btn btn-xs btn-outline btn-danger" data-toggle="tooltip" title="Delete"
+                    data-action="delete" data-mock="<%= uuid %>">Delete</a>
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <% else %>
+    <div class="row">
+      <div class="col-md-2">
+        <p>No mocks were found</p>
+        <a href="<%= Routes.app_path(@conn, :create) %>" class="btn btn-block btn-danger btn-rounded p-l-10 p-r-10">Create
+          mock</a>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
+<div class="control" data-value="<%= csrf_token() %>"></div>
