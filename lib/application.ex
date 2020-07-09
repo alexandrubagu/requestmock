@@ -7,16 +7,11 @@ defmodule RequestMock.Application do
 
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
       RequestMock.Repo,
-      # Start the Telemetry supervisor
-      RequestMock.Web.Telemetry,
-      # Start the PubSub system
       {Phoenix.PubSub, name: RequestMock.PubSub},
-      # Start the Endpoint (http/https)
+      Mockapp.Response.Manager,
+      Mockapp.Request.Manager,
       RequestMock.Web.Endpoint
-      # Start a worker by calling: RequestMock.Worker.start_link(arg)
-      # {RequestMock.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
