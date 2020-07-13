@@ -157,7 +157,6 @@ defmodule Mockapp.Request.Manager do
   defp parse_file(file, line_or_chars, default, func)
        when line_or_chars in [:line, :all] and is_function(func) do
     case IO.read(file, line_or_chars) do
-      nil -> default
       :eof -> default
       value -> func.(value)
     end

@@ -5,7 +5,7 @@ defmodule Mockapp.Response.Entity do
   defstruct [:status, :http_status, :content_type, :tags, :headers, :body]
 
   # copy-paste from Plug.Conn.Status
-  @statuses  %{
+  @statuses %{
     100 => "Continue",
     101 => "Switching Protocols",
     102 => "Processing",
@@ -72,8 +72,7 @@ defmodule Mockapp.Response.Entity do
   def is_struct?(mock) do
     with true <- is_map(mock),
          true <- Map.has_key?(mock, :__struct__),
-         true <- mock.__struct__ == Mockapp.Response.Entity
-    do
+         true <- mock.__struct__ == Mockapp.Response.Entity do
       true
     else
       _ -> false
@@ -97,12 +96,11 @@ defmodule Mockapp.Response.Entity do
 
   def validate_status(status) do
     with {int, _} <- Integer.parse(status),
-         {:ok, _} <- Map.fetch(@statuses, int)
-    do
+         {:ok, _} <- Map.fetch(@statuses, int) do
       :ok
     else
       _ ->
-        Logger.error "Failed validating status: #{status}"
+        Logger.error("Failed validating status: #{status}")
         :invalid_status
     end
   end
@@ -111,26 +109,24 @@ defmodule Mockapp.Response.Entity do
   def validate_body(_), do: :invalid_body
 
   def validate_headers(headers) do
-    with {:ok, names}   <- Map.fetch(headers, "name"),
-         {:ok, values}  <- Map.fetch(headers, "value"),
-         true           <- is_list(names) && is_list(values)
-    do
+    with {:ok, names} <- Map.fetch(headers, "name"),
+         {:ok, values} <- Map.fetch(headers, "value"),
+         true <- is_list(names) && is_list(values) do
       :ok
     else
       _ ->
-        Logger.error "Failed validating headers: #{inspect headers}"
+        Logger.error("Failed validating headers: #{inspect(headers)}")
         :invalid_headers
     end
   end
 
   def validate(params) do
-    with {:ok, status}  <- Map.fetch(params, "status"),
+    with {:ok, status} <- Map.fetch(params, "status"),
          {:ok, headers} <- Map.fetch(params, "headers"),
-         {:ok, body}    <- Map.fetch(params, "body"),
-         :ok            <- validate_status(status),
-         :ok            <- validate_headers(headers),
-         :ok            <- validate_body(body)
-    do
+         {:ok, body} <- Map.fetch(params, "body"),
+         :ok <- validate_status(status),
+         :ok <- validate_headers(headers),
+         :ok <- validate_body(body) do
       :ok
     else
       error -> {:error, error}
