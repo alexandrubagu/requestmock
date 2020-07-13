@@ -1,0 +1,154 @@
+<div class="col-md-12">
+  <div class="row bg-title">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="<%= Routes.app_path(@conn, :index) %>">Homepage</a></li>
+        <li class="active">Request mock</li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12">
+      <div class="white-box">
+        <center>
+          <h2 class="box-title m-b-0">Mock Builder</h2>
+          <p class="text-muted m-b-30 font-13"> request http mock</p>
+        </center>
+        <%= form_for @conn, Routes.app_path(@conn, :create), [as: :create], fn _ -> %>
+        <!-- Status -->
+        <div class="form-group">
+          <label>Status</label>
+          <select name="status" class="selectpicker">
+            <optgroup label="1xx">
+              <option value="100">100 - Continue</option>
+              <option value="101">101 - Switching Protocols</option>
+              <option value="102">102 - Processing</option>
+            </optgroup>
+            <optgroup label="2xx">
+              <option value="200" selected="selected">200 - OK</option>
+              <option value="201">201 - Created</option>
+              <option value="202">202 - Accepted</option>
+              <option value="203">203 - Non-Authoritative Information</option>
+              <option value="204">204 - No Content</option>
+              <option value="205">205 - Reset Content</option>
+              <option value="206">206 - Partial Content</option>
+              <option value="207">207 - Multi-Status</option>
+              <option value="208">208 - Already Reported</option>
+              <option value="226">226 - IM Used</option>
+            </optgroup>
+            <optgroup label="3xx">
+              <option value="300">300 - Multiple Choices</option>
+              <option value="301">301 - Moved Permanently</option>
+              <option value="302">302 - Found</option>
+              <option value="303">303 - See Other</option>
+              <option value="304">304 - Not Modified</option>
+              <option value="305">305 - Use Proxy</option>
+              <option value="306">306 - Switch Proxy</option>
+              <option value="307">307 - Temporary Redirect</option>
+              <option value="308">308 - Permanent Redirect</option>
+            </optgroup>
+            <optgroup label="4xx">
+              <option value="400">400 - Bad Request</option>
+              <option value="401">401 - Unauthorized</option>
+              <option value="402">402 - Payment Required</option>
+              <option value="403">403 - Forbidden</option>
+              <option value="404">404 - Not Found</option>
+              <option value="405">405 - Method Not Allowed</option>
+              <option value="406">406 - Not Acceptable</option>
+              <option value="407">407 - Proxy Authentication Required</option>
+              <option value="408">408 - Request Timeout</option>
+              <option value="409">409 - Conflict</option>
+              <option value="410">410 - Gone</option>
+              <option value="411">411 - Length Required</option>
+              <option value="412">412 - Precondition Failed</option>
+              <option value="413">413 - Request Entity Too Large</option>
+              <option value="414">414 - Request-URI Too Long</option>
+              <option value="415">415 - Unsupported Media Type</option>
+              <option value="416">416 - Requested Range Not Satisfiable</option>
+              <option value="417">417 - Expectation Failed</option>
+              <option value="418">418 - I'm a teapot</option>
+              <option value="421">421 - Misdirected Request</option>
+              <option value="422">422 - Unprocessable Entity</option>
+              <option value="423">423 - Locked</option>
+              <option value="424">424 - Failed Dependency</option>
+              <option value="425">425 - Unordered Collection</option>
+              <option value="426">426 - Upgrade Required</option>
+              <option value="428">428 - Precondition Required</option>
+              <option value="429">429 - Too Many Requests</option>
+              <option value="431">431 - Request Header Fields Too Large</option>
+            </optgroup>
+            <optgroup label="5xx">
+              <option value="500">500 - Internal Server Error</option>
+              <option value="501">501 - Not Implemented</option>
+              <option value="502">502 - Bad Gateway</option>
+              <option value="503">503 - Service Unavailable</option>
+              <option value="504">504 - Gateway Timeout</option>
+              <option value="505">505 - HTTP Version Not Supported</option>
+              <option value="506">506 - Variant Also Negotiates</option>
+              <option value="507">507 - Insufficient Storage</option>
+              <option value="508">508 - Loop Detected</option>
+              <option value="510">510 - Not Extended</option>
+              <option value="511">511 - Network Authentication Required</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <!-- Headers -->
+        <div class="form-group">
+          <label>Headers</label>
+          <div class="input-group multi">
+            <span class="input-group-addon">Header</span>
+            <input type="text" name="headers[name][]" placeholder="name" class="form-control">
+            <input type="text" name="headers[value][]" placeholder="value" class="form-control">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-info add-header"><i class="glyphicon glyphicon-plus"></i></button>
+              <button type="button" class="btn btn-danger remove-header hidden"><i
+                  class="glyphicon glyphicon-minus"></i></button>
+            </span>
+          </div>
+        </div>
+
+        <!-- Content-Type -->
+        <div class="form-group">
+          <label>Content-Type</label>
+          <select name="content-type" class="selectpicker">
+            <optgroup>
+              <option value="application/json" selected="selected">application/json</option>
+              <option value="application/xml">application/xml</option>
+              <option value="text/css">text/css</option>
+              <option value="text/html">text/html</option>
+              <option value="text/plain">text/plain</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <!-- Body -->
+        <div class="form-group">
+          <label>Body</label>
+          <textarea name="body" class="form-control" rows="7"></textarea>
+        </div>
+
+        <!-- Tags -->
+        <div class="form-group">
+          <label>Tags</label>
+          <input type="text" name="tags" placeholder="other-tag" class="form-control" data-role="tagsinput"
+            data-confirmKeys="[13, 32, 44]" value="default">
+        </div>
+
+        <button class="btn btn-block btn-danger btn-lg btn-rounded">Submit</button>
+        <% end %>
+      </div>
+    </div>
+
+    <!--
+        <div class="col-lg-5 col-md-6 col-sm-8 col-xs-12">
+            <div class="white-box">
+                <center>
+                    <h3 class="box-title m-b-0">Mock Preview</h3>
+                    <p class="text-muted m-b-30 font-13">http mock content</p>
+                </center>
+            </div>
+        </div>
+        -->
+  </div>
+</div>

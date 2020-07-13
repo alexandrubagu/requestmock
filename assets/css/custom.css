@@ -1,0 +1,50 @@
+.input-group .form-control:not(:first-child):not(:last-child),
+.input-group-addon:not(:first-child):not(:last-child),
+.input-group-btn:not(:first-child):not(:last-child) {
+    border-left-width: 0 !important;
+}
+
+.input-group.multi {
+    margin-bottom: 5px;
+}
+
+.input-group.multi>.form-control {
+    width: 50%;
+}
+
+textarea {
+    resize: none;
+}
+
+.tr-link {
+    cursor:pointer;
+}
+
+.btn-default.btn-outline.focus, .btn-default.btn-outline:focus, .btn-default.btn-outline:hover {
+    background: none;
+}
+
+.modal-header.custom {
+    border-bottom: 0px;
+}
+
+.modal-body.custom {
+    padding: 0;
+}
+
+.table-responsive.custom {
+    padding: 0;
+}
+
+.request-body {
+    overflow: auto;
+    width: inherit;
+}
+
+.table.custom {
+    margin-bottom: 0px;
+}
+
+.p-l-15 {
+    padding-left: 15px;
+}

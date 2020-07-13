@@ -14,13 +14,30 @@ defmodule RequestMock.Web.Router do
   end
 
   scope "/", RequestMock.Web do
+    # Use the default browser stack
     pipe_through :browser
 
-    get "/", PageController, :index
+    # start page
+    get "/", AppController, :index
+
+    # create
+    get "/create", AppController, :create
+    post "/create", AppController, :create
+
+    # listing
+    get "/list", AppController, :show
+    get "/view/:uuid", AppController, :view
+
+    # how-to-use
+    get "/how-to-use/:uuid", AppController, :howto
+    get "/how-to-use", AppController, :howto
+
+    # ajax
+    post "/switch", AppController, :switch
+    post "/delete", AppController, :delete
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", RequestMock.Web do
-  #   pipe_through :api
-  # end
+  scope "/request", alias: RequestMock.Web do
+    forward "/", Plug.Request
+  end
 end

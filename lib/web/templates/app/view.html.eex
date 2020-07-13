@@ -1,0 +1,138 @@
+<div class="col-md-12">
+  <div class="row bg-title">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="<%= Routes.app_path(@conn, :index) %>">Homepage</a></li>
+        <li><a href="<%= Routes.app_path(@conn, :show) %>" rel="nofollow">Mock list</a></li>
+        <li class="active">Mock Requests</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="white-box">
+    <%= if Enum.count(@requests) > 0 do %>
+    <h2 class="box-title">Requests</h2>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Method</th>
+                <th>DateTime</th>
+                <th>IP</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= for {request, index} <- Enum.with_index(@requests) do %>
+              <tr>
+                <td><%= index + 1 %></td>
+                <td>
+                  <%= if request.method == "GET" do %>
+                  <span class="label label-success"><%= request.method %></span>
+                  <% end %>
+
+                  <%= if request.method == "POST" do %>
+                  <span class="label label-warning"><%= request.method %></span>
+                  <% end %>
+
+                  <%= if request.method == "PUT" do %>
+                  <span class="label label-info"><%= request.method %></span>
+                  <% end %>
+
+                  <%= if request.method == "UPDATE" do %>
+                  <span class="label label-info"><%= request.method %></span>
+                  <% end %>
+
+                  <%= if request.method == "DELETE" do %>
+                  <span class="label label-danger"><%= request.method %></span>
+                  <% end %>
+                </td>
+                <td><%= request.datetime %></td>
+                <td><%= request.ip %></td>
+                <td>
+                  <a href="#details" class="btn btn-xs btn-outline btn-info modal-request" data-toggle="tooltip"
+                    title="View Full Request">More Details</a>
+                  <!-- Modal -->
+                  <div class="modal fade">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header custom">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                              aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title"">Request No. <%= index + 1 %></h4>
+                                                        </div>
+                                                        <div class=" modal-body custom">
+                            <div class="table-responsive custom">
+                              <table class="table custom table-striped">
+                                <tbody>
+                                  <tr>
+                                    <td class="p-l-20">Method: </td>
+                                    <td><%= request.method %></td>
+                                  </tr>
+                                  <tr>
+                                    <td class="p-l-20">Datetime: </td>
+                                    <td><%= request.datetime %></td>
+                                  </tr>
+                                  <tr>
+                                    <td class="p-l-20">IP: </td>
+                                    <td><%= request.ip %></td>
+                                  </tr>
+                                  <tr>
+                                    <td class="p-l-20">Content-Type: </td>
+                                    <td><%= request.content_type %></td>
+                                  </tr>
+                                  <tr>
+                                    <td class="p-l-20">Request Path</td>
+                                    <td><%= request.path %></td>
+                                  </tr>
+                                  <tr>
+                                    <td class="p-l-20">Query String</td>
+                                    <td><%= request.query_string %></td>
+                                  </tr>
+                                  <tr>
+                                    <td class="p-l-20">Body Params</td>
+                                    <td><%= request.body_params %></td>
+                                  </tr>
+                                  <tr>
+                                    <td class="p-l-20">User Agent</td>
+                                    <td><%= request.user_agent %></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div clas="request-body">
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-danger text-left" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-1">
+        <a href="<%= Routes.app_path(@conn, :show) %>" class="btn btn-block btn-info btn-rounded">Back to list</a>
+      </div>
+    </div>
+    <% else %>
+    <div class="row">
+      <div class="col-md-1">
+        <p>No results</p>
+        <a href="<%= Routes.app_path(@conn, :show) %>" class="btn btn-block btn-info btn-rounded">Back to list</a>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>

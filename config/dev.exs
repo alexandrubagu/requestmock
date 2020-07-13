@@ -22,10 +22,9 @@ config :request_mock, RequestMock.Web.Endpoint,
   check_origin: false,
   watchers: [
     node: [
-      "node_modules/webpack/bin/webpack.js",
-      "--mode",
-      "development",
-      "--watch-stdin",
+      "node_modules/brunch/bin/brunch",
+      "watch",
+      "--stdin",
       cd: Path.expand("../assets", __DIR__)
     ]
   ]

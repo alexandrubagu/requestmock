@@ -1,0 +1,284 @@
+<div class="col-md-12">
+  <div class="row bg-title">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="Routes.app_path(@conn, :index) %>">Homepage</a></li>
+        <li class="active">How to use a mock</li>
+      </ol>
+    </div>
+  </div>
+  <div class="white-box">
+    <h2 class="box-title">How to use</h2>
+    <%= if Enum.count(@mocks) > 0 do %>
+    <div class="row">
+      <div class="col-md-3">
+        <select name="status" class="selectpicker"
+          onchange="window.location = '/how-to-use/' + this.options[this.selectedIndex].value;">
+          <option>Select other mock</option>
+          <%= for uuid <- @mocks do %>
+          <%= if uuid != @mock do %>
+          <option value="<%= uuid %>"><%= uuid %></option>
+          <% end %>
+          <% end %>
+        </select>
+      </div>
+    </div>
+    <% end %>
+
+    <%= if Enum.count(@mocks) > 0 && @mock == nil do %>
+    <h6 class="p-l-20">Please select a mock</h6>
+    <% end %>
+
+    <div class="row">
+      <%= if @mock do %>
+      <!-- Nav tabs -->
+      <ul class="nav customtab nav-tabs m-t-30 m-l-20" role="tablist">
+        <li role="presentation" class="active">
+          <a href="#csharp" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false">
+            <span>C#</span>
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#go" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false">
+            <span>Go</span>
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#java" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false">
+            <span>Java</span>
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#jquery" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false">
+            <span>jQuery</span>
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#php" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false">
+            <span>PHP</span>
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#python" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false">
+            <span>Python</span>
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#ruby" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false">
+            <span>Ruby</span>
+          </a>
+        </li>
+        <li role="presentation">
+          <a href="#bash" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false">
+            <span>Bash</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane fade active in" id="charp">
+          <div class="col-md-12">
+            <pre><code class="csharp">
+var client = new RestClient("<%= @url <> @mock %>?foo=bar&foo=baz");
+var request = new RestRequest(Method.POST);
+request.AddHeader("content-type", "application/x-www-form-urlencoded");
+request.AddHeader("accept", "application/json");
+request.AddCookie("foo", "bar");
+request.AddCookie("bar", "baz");
+request.AddParameter("application/x-www-form-urlencoded", "foo=bar&bar=baz", ParameterType.RequestBody);
+IRestResponse response = client.Execute(request);
+</code></pre>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="go">
+          <div class="col-md-12">
+            <pre><code class="go">
+package main
+
+import (
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "<%= @url <> @mock %>?foo=bar&foo=baz"
+
+	payload := strings.NewReader("foo=bar&bar=baz")
+
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("cookie", "foo=bar; bar=baz")
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("content-type", "application/x-www-form-urlencoded")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+</code></pre>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="java">
+          <div class="col-md-12">
+            <pre><code class="javascript">
+HttpResponse<String> response = Unirest.post("<%= @url <> @mock %>?foo=bar&foo=baz")
+  .header("cookie", "foo=bar; bar=baz")
+  .header("accept", "application/json")
+  .header("content-type", "application/x-www-form-urlencoded")
+  .body("foo=bar&bar=baz")
+  .asString();
+</code></pre>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="jquery">
+          <div class="col-md-12">
+            <pre><code class="javascript">
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "<%= @url <> @mock %>?foo=bar&foo=baz",
+  "method": "POST",
+  "headers": {
+    "cookie": "foo=bar; bar=baz",
+    "accept": "application/json",
+    "content-type": "application/x-www-form-urlencoded"
+  },
+  "data": {
+    "foo": "bar",
+    "bar": "baz"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+</code></pre>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="php">
+          <div class="col-md-12">
+            <pre><code class="php">
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "<%= @url <> @mock %>?foo=bar&foo=baz",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "POST",
+  CURLOPT_POSTFIELDS => "foo=bar&bar=baz",
+  CURLOPT_COOKIE => "foo=bar; bar=baz",
+  CURLOPT_HTTPHEADER => array(
+    "accept: application/json",
+    "content-type: application/x-www-form-urlencoded"
+  ),
+));
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
+</code></pre>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="python">
+          <div class="col-md-12">
+            <pre><code class="python">
+import http.client
+
+conn = http.client.HTTPConnection("requestmock.com")
+
+payload = "foo=bar&bar=baz"
+
+headers = {
+    'cookie': "foo=bar; bar=baz",
+    'accept': "application/json",
+    'content-type': "application/x-www-form-urlencoded"
+    }
+
+conn.request("POST", "/bin/<%= @mock %>?foo=bar&foo=baz", payload, headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+</code></pre>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="ruby">
+          <div class="col-md-12">
+            <pre><code class="ruby">
+require 'uri'
+require 'net/http'
+
+url = URI("<%= @url <> @mock %>?foo=bar&foo=baz")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Post.new(url)
+request["cookie"] = 'foo=bar; bar=baz'
+request["accept"] = 'application/json'
+request["content-type"] = 'application/x-www-form-urlencoded'
+request.body = "foo=bar&bar=baz"
+
+response = http.request(request)
+puts response.read_body
+</code></pre>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="bash">
+          <div class="col-md-12">
+            <pre><code class="bash">
+curl --request POST \
+  --url '<%= @url <> @mock %>?foo=bar&foo=baz' \
+  --header 'accept: application/json' \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --cookie 'foo=bar; bar=baz' \
+  --data 'foo=bar&bar=baz'
+</code></pre>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <%= if Enum.count(@mocks) == 0 && @mock == nil do %>
+    <div class="row">
+      <div class="col-md-2">
+        <a href="<%= Routes.app_path(@conn, :create) %>" class="btn btn-block btn-danger btn-rounded">Create mock</a>
+      </div>
+    </div>
+    <% else %>
+    <div class="row">
+      <div class="col-md-2">
+        <a href="<%= Routes.app_path(@conn, :show) %>" class="btn btn-block btn-info btn-rounded">Back to list</a>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
