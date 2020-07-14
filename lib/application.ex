@@ -9,8 +9,8 @@ defmodule RequestMock.Application do
     children = [
       RequestMock.Repo,
       {Phoenix.PubSub, name: RequestMock.PubSub},
-      Mockapp.Response.Manager,
-      Mockapp.Request.Manager,
+      # Mockapp.Response.Manager,
+      # Mockapp.Request.Manager,
       RequestMock.Web.Endpoint
     ]
 

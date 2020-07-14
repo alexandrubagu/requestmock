@@ -1,7 +1,7 @@
 defmodule RequestMock.Core.Utils do
   @moduledoc false
 
-  @anonymous_responses_path Application.compile_env!(:request_mock, [:requests, :anonymous])
+  @anonymous_responses_path Application.compile_env(:request_mock, [:requests, :anonymous])
 
   def create_response_filename(uuid) do
     filename_path = absolute_filename_path(uuid)
