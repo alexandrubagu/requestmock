@@ -1,8 +1,8 @@
-defmodule RequestMock.AnonymousResponses do
+defmodule RequestMock.Core.AnonymousResponses do
   @moduledoc false
 
   alias RequestMock.Repo
-  alias RequestMock.AnonymousResponses.AnonymousResponses
+  alias RequestMock.Core.AnonymousResponses.AnonymousResponses
 
   def create(uuid) do
     uuid

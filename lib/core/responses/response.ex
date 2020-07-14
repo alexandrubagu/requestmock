@@ -1,4 +1,4 @@
-defmodule RequestMock.Responses.Response do
+defmodule RequestMock.Core.Responses.Response do
   @moduledoc false
 
   require Logger
@@ -7,12 +7,12 @@ defmodule RequestMock.Responses.Response do
 
   @required ~w(status http_status content_type tags headers body)a
   embedded_schema do
-    field :status, :integer
-    field :http_status, :integer
-    field :content_type, :string
-    field :tags, {:array, :string}
-    field :headers, :integer
-    field :body, :string
+    field :status, :integer, default: 0
+    field :http_status, :integer, default: 404
+    field :content_type, :string, default: "text/plain"
+    field :tags, {:array, :string}, default: []
+    field :headers, {:array, :map}, default: []
+    field :body, :string, default: ""
   end
 
   def validate(params) do

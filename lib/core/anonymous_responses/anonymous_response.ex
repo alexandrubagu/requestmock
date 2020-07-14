@@ -1,4 +1,4 @@
-defmodule RequestMock.AnonymousResponses.AnonymousResponses do
+defmodule RequestMock.Core.AnonymousResponses.AnonymousResponses do
   @moduledoc """
   Schema for persisting anonymous responses uuid
   """

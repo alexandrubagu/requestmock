@@ -1,4 +1,4 @@
-# defmodule Database.Response.Manager do
+# defmodule Database.Core.Response.Manager do
 #   @moduledoc false
 
 #   use GenServer

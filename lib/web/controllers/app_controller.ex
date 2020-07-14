@@ -27,7 +27,7 @@ defmodule RequestMock.Web.AppController do
 
   defp create_mock(conn, params) do
     result =
-      case Mockapp.Response.Manager.create(params) do
+      case RequestMock.Response.Manager.create(params) do
         {:ok, response} ->
           Logger.info("response #{response} was generated")
 

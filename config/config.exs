@@ -9,7 +9,15 @@ use Mix.Config
 
 config :request_mock,
   namespace: RequestMock,
-  ecto_repos: [RequestMock.Repo]
+  ecto_repos: [RequestMock.Repo],
+  requests: [
+    anonymous: "/tmp/anonymous/requests/",
+    authenticated: "not_implemented_yet"
+  ],
+  responses: [
+    anonymous: "/tmp/anonymous/requests/",
+    authenticated: "not_implemented_yet"
+  ]
 
 # Configures the endpoint
 config :request_mock, RequestMock.Web.Endpoint,
